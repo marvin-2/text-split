@@ -30,8 +30,18 @@ int removenewlines(string iFile, string oFile) {
 int split(string iFile, string oFile, char delimiter, int newlines, char keepdelimiter) {
 
   string data;
-  ifstream myIFile(iFile);
-  ofstream myOFile(oFile);
+  ifstream myIFile;
+  ofstream myOFile;
+
+  myIFile.open(iFile);
+  if (!myIFile.is_open()) {
+    cout << "Error opening file!";
+  }
+
+  myOFile.open(oFile);
+  if (!myOFile.is_open()) {
+    cout << "Error creating file!";
+  }
 
   while(getline(myIFile, data, delimiter)) {
 
@@ -56,12 +66,9 @@ int split(string iFile, string oFile, char delimiter, int newlines, char keepdel
 
 int main() {
 
-  string iFile = "EDI850.txt";
-  string oFile = "test2.txt";
-  string oFile2 = "test.txt";
-
-  removenewlines(iFile, oFile2);
-  split(iFile, oFile, '~', 0, 'Y');
+  // removenewlines("EDI850.txt", "single.txt");
+  // split("single.txt", "test.txt", '~', 1, 'Y');
+  split("EDI850.txt", "test.txt", '~', 1, 'Y');
 
   return 0;
 
