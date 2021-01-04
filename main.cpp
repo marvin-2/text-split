@@ -35,12 +35,13 @@ int split(string iFile, string oFile, char delimiter, int newlines, char keepdel
 
   myIFile.open(iFile);
   if (!myIFile.is_open()) {
-    cout << "Error opening file!";
+    throw runtime_error("Error! Cannot open input file: " + iFile + '\n');
   }
 
   myOFile.open(oFile);
   if (!myOFile.is_open()) {
-    cout << "Error creating file!";
+    myIFile.close();
+    throw runtime_error("Error! Cannot create file: " + oFile + '\n');
   }
 
   while(getline(myIFile, data, delimiter)) {
@@ -52,7 +53,7 @@ int split(string iFile, string oFile, char delimiter, int newlines, char keepdel
     }
 
     for (int i = 0; i < newlines; i++) {
-      myOFile << endl;
+      myOFile << '\n';
     }
 
   }
@@ -61,7 +62,6 @@ int split(string iFile, string oFile, char delimiter, int newlines, char keepdel
   myIFile.close();
 
   return 0;
-
 }
 
 int main() {
@@ -70,6 +70,13 @@ int main() {
   // split("single.txt", "test.txt", '~', 1, 'Y');
   split("EDI850.txt", "test.txt", '~', 1, 'Y');
 
-  return 0;
+  //// Error handling
+  // try {
+  //   split("EDI850.txt", "test.txt", '~', 1, 'Y');
+  // } catch (const runtime_error& e) {
+  //   cout << e.what();
+  //   throw e;
+  // }
 
+  return 0;
 }
